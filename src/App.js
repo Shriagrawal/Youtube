@@ -1,25 +1,42 @@
-import logo from './logo.svg';
 import './App.css';
+import Header from '../src/Components/Header';
+import Body from '../src/Components/Body'
+import {Provider} from "react-redux"
+import store from './Utils/store'
+import VideoContainer from '../src/Components/VideoContainer'
+import {BrowserRouter as Router,Route,Routes } from 'react-router-dom'; 
+import PlayingVideo from '../src/Components/PlayingVideo'
+import { useState } from 'react';
+//header
+  //hamburger(toogle feature)
+  //logo
+  //Search
 
-function App() {
+//body
+   // icons
+   // video cards
+
+// video playing screen
+const App = () => {
+  const[filtereddata,setfiltereddata] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Header />
+        <Routes>
+          <Route
+            path="/"
+            element={<Body />}
+            children={[ 
+              <>
+            <Route path="/" element={<VideoContainer />} />
+            <Route path="/:id" element={<PlayingVideo />} />
+            </>]}
+          />
+        </Routes>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
